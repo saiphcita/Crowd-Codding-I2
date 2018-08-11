@@ -176,7 +176,7 @@ class PostAndCategory extends Component {
                 <li className="tittleListPC">Statistics of each Post</li>
                   {this.state.post.map((val, indexPost) => {
 
-                    let Postvalores = this.state.PostOfUser.map(val => parseInt(val[indexPost].category, 4))
+                    let Postvalores = this.state.PostOfUser.map(val => parseInt(val[indexPost].category, 10))
                     let TotalValores = Postvalores.length
                     var percentage = {};
                     for (let i = 0; i < TotalValores; i++) {
@@ -193,6 +193,7 @@ class PostAndCategory extends Component {
                         styleB="ButtonStyleStadistics"
                         estadistica={
                           Object.keys(percentage).map((key, index) => {
+                            console.log( indexPost + "----------" + key)
                             if(key > 0){
                               return <li key={index}>{this.state.category[key]+" with the percentage of: "+percentage[key]+"%"}</li>
                             }else{
