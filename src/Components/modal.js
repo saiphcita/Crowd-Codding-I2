@@ -8,7 +8,6 @@ class ModalExample extends React.Component {
     this.state = {
       modal: false
     };
-
     this.toggle = this.toggle.bind(this);
   }
 
@@ -19,30 +18,14 @@ class ModalExample extends React.Component {
   }
 
   render() {
-
-    var divStadistic = null
-    var divPost = <div style={{marginBottom:"8px"}}>{this.props.post}</div>
-
-    if(Array.isArray(this.props.estadistica)){
-      if (this.props.estadistica.length === 0) {
-        divStadistic = "No user has selected a category in this post"
-        divPost = <div/>
-      }else{
-        divStadistic = this.props.estadistica
-      }
-    }else{
-      divStadistic = ""
-    }
-
     return (
-      <div className="divShowMore">
-        <button color="info" onClick={this.toggle} className={this.props.styleB}>{this.props.ButtonName}</button>
+      <div style={{display: "inline"}}>
+        <button onClick={this.toggle} className={this.props.styleB}>Show More</button>
         <Modal isOpen={this.state.modal} modalTransition={{ timeout: 350 }} backdropTransition={{ timeout: 1300 }}
           toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Post Number {this.props.ind}</ModalHeader>
           <ModalBody>
-              {divPost}
-              {divStadistic}
+              {this.props.post}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>Go Back</Button>

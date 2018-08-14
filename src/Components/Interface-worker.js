@@ -144,14 +144,13 @@ class PostAndCategory extends Component {
               <ul className="listPost">
                 <li className="tittleListPC">Post</li>
                   {this.state.post.map((val, i) => {
-                    if(val.post.length > 92){
+                    if(val.post.length > 82){
                       return <li key={i}>
-                        {val.post.substring(0,92)}... 
+                        {val.post.substring(0,82)}... 
                         <ModalExample 
-                        ButtonName={"Show More"}
                         post={val.post} 
                         ind={i+1} 
-                        styleB="buttonChange buttonShow"
+                        styleB="buttonShow"
                         />
                       </li>
                     }else{
@@ -181,7 +180,7 @@ class PostAndCategory extends Component {
               <ul className="listStatistics">
                 <li className="tittleListPC">Statistics of each Post</li>
                   {this.state.post.map((val, indexPost) => {
-                    //This is for the button Show Statistics
+                    //This is for Show Statistics
                     let ArrayValores = this.state.PostOfUser.map(val => parseInt(val[indexPost].category, 10));
                     var Postvalores = [];
                     for (let i = 0; i < ArrayValores.length; i++) {
@@ -195,22 +194,45 @@ class PostAndCategory extends Component {
                       percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1;
                     }
                     for (let key in percentage) {
-                    percentage[key] = (percentage[key] / TotalValores) * 100;
+                    percentage[key] = Math.round(((percentage[key]/TotalValores)*100)*10) / 10;
+                    }
+                    // THIS IS THE RESULT
+                    if (Postvalores.length === 0) {
+                      return <li className="LIstatistics" key={indexPost}>
+                        <div className="noUserSelected">No one has selected in this Post</div>
+                      </li>
+                    }else {
+                      return <li className="LIstatistics" key={indexPost}>
+                      <div className="StyleStatistics">
+                        {
+                          Object.keys(percentage).map((key, index) => {
+                            if(percentage[key] >= 45){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                               {this.state.category[key]+" "+percentage[key]+"%"}
+                             </div> 
+                            }else if(percentage[key] >= 30){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                               {this.state.category[key]}
+                             </div> 
+                            }else if(percentage[key] >= 8){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                               {percentage[key]+"%"}
+                             </div> 
+                            }else{
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}
+                              />
+                            }      
+                          })
+                        }  
+                      </div>
+                    </li> 
                     }
 
-                    return <li className="LIstatistics" key={indexPost}>
-                        <ModalExample
-                        ButtonName={"Show Statistics"}
-                        post={"Users have selected the following Categories:"}
-                        ind={indexPost+1} 
-                        styleB="ButtonStyleStadistics"
-                        estadistica={
-                          Object.keys(percentage).map((key, index) => {
-                            return <li key={index}>{this.state.category[key]+" with the percentage of: "+percentage[key]+"%"}</li>                   
-                        })
-                        }/>
-                      </li>
-                    })}
+                  })}
               </ul>
         </div>
       </div>

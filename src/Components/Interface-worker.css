@@ -3,7 +3,7 @@
   height: 100%;
 }
 
-
+/* HEADER */
 .Bar-header {
   background-color: #333333;
   padding: 1%;
@@ -13,19 +13,17 @@
   display: flex;
   justify-content: space-between;
 }
-
 .ButtonLogOut {
   background-color: #666D6D;
   color: black;
   border-radius: 3px;
   cursor: pointer;
 }
-
 .divAPC {
   height: 100%;
 }
 
-
+/* ASIDE */
 .aside {
   background-color: #007acc;
   float: left;
@@ -51,7 +49,6 @@
   background-color: white;
 }
 
-
 .DivDefinition {
   display: inline-flex;
   height: auto;
@@ -74,7 +71,7 @@
   border-bottom: 1px solid black;
 }
 
-
+/* BUTTON */
 .buttonSave {
   margin: 1% 0 0 1%;
   float: left;
@@ -82,12 +79,18 @@
   background-color: white;
 }
 
+/* POST AND CATEGORY SECTION */
 .DivPostCategory {
   float: left;
   display: inline-flex;
   height: auto;
   margin: 1% 0 0 1%;
   width: 88%;
+}
+.tittleListPC {
+  font-size: 1.05rem;
+  font-weight: bolder;
+  width: 100%;
 }
 .DivPostCategory li {
   text-align: left;
@@ -98,10 +101,32 @@
   width: 100%;
 }
 
+/* POST SECTION */
 .listPost {
+  width: 700px;
   padding: 0;
   margin-bottom: 0;
 }
+.buttonShow {
+  text-align: center;
+  float: right;  
+  font-size: 0.9rem;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  padding: 0 2px;
+  margin: 0 0 0 4px;
+  background-color: white; 
+  color: black; 
+  border: 1.2px solid rgba(0,0,0,.125);
+  border-radius: 2px;
+}
+.buttonShow:hover {
+  background-color: gray;
+  color: white;
+}
+
+/* CATEGORY SECTION */
 .listCategory {
   padding: 0;
   margin-bottom: 0;
@@ -113,59 +138,40 @@
   color: black;
 }
 
+/* STATISTICS SECTION */
 .listStatistics {
+  width: 300px;
   padding: 0;
   margin-bottom: 0;
   text-align: center;
 }
 .LIstatistics {
-  margin: 0;
+  border: 0 !important;
+  margin: 0 !important;
   padding: 0 !important;
 }
-.ButtonStyleStadistics {
+.noUserSelected{
+  height: 100%;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,.125);
+  padding: 8px 0;
+  text-align: center;
+}
+.StyleStatistics  {
+  display: inline-flex;
   background-color: white;
   border: 0;
-  padding: 8px 5px 8px 10px;
   color: black;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
+  height: 100%;
   width: 100%;
 }
-.ButtonStyleStadistics:hover {
-  background-color: #B7BFBF;
-  color: black;
-}
-
-
-.tittleListPC {
-  font-size: 1.3rem;
-  width: 100%;
-}
-
-.divShowMore{
-  display: inline;
-}
-.buttonChange {
-  padding: 0 2px;
-  margin: 0 0 0 4px;
-  border: none;
-  color: white;
+.DivStatistics {
   text-align: center;
-  float: right;  
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  line-height: auto;
-  font-size: 0.9rem;
+  border: 1px solid rgba(0,0,0,.125);
+  margin: 0;
+  padding: 8px 0;
+  cursor:pointer;
 }
-.buttonShow {
-  background-color: white; 
-  color: black; 
-  border: 1.2px solid rgba(0,0,0,.125);
-  border-radius: 2px;
-}
-.buttonShow:hover {
-  background-color: gray;
-  color: white;
+.DivStatistics:hover{
+  background-color:white;
 }
