@@ -27,7 +27,7 @@
 .aside {
   background-color: #007acc;
   float: left;
-  width: 10%;
+  width: 130px;
   color: black;
   height: 92%;
 }
@@ -73,10 +73,10 @@
 
 /* BUTTON */
 .buttonSave {
-  margin: 1% 0 0 1%;
+  margin: 5px 0 0 615px;
+  width: 175px;
   float: left;
   height: auto;
-  background-color: white;
 }
 
 /* POST AND CATEGORY SECTION */
@@ -84,8 +84,8 @@
   float: left;
   display: inline-flex;
   height: auto;
-  margin: 1% 0 0 1%;
-  width: 85%;
+  margin: 26px 0 0 15px;
+  width: 1200px;
 }
 .tittleListPC {
   font-size: 1.05rem;
@@ -103,14 +103,14 @@
 
 /* POST SECTION */
 .listPost {
-  width: 740px;
+  width: 600px;
   padding: 0;
   margin-bottom: 0;
 }
 .buttonShow {
   text-align: center;
   float: right;  
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -133,14 +133,14 @@
 }
 .listCategory select {
   border: 0px solid;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   background-color: white;
   color: black;
 }
 
 /* STATISTICS SECTION */
 .listStatistics {
-  width: 300px;
+  width: 420px;
   padding: 0;
   margin-bottom: 0;
   text-align: center;
@@ -169,22 +169,11 @@
   text-align: center;
   border: 1px solid rgba(0,0,0,.125);
   margin: 0;
-  padding: 8px 0;
+  padding: 1px 0;
+  height: 42px;
 }
-.DivStatistics:hover .tooltiptext{
-  visibility: visible;
-  background-color:black;
-}
-.tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: white;
-  text-align: center;
-  border-radius: 12px;
-  padding: 0;
+.DivStatistics p {
+  font-size: 0.9rem;
   margin: 0;
-  font-size: 0.82rem;
-  /* Position the tooltip */
-  position: absolute;
+  padding: 0;
 }

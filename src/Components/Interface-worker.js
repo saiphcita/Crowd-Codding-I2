@@ -139,14 +139,13 @@ class PostAndCategory extends Component {
   render() {
     return (
       <div>
-        <Button outline color="success" className="buttonSave" onClick={()=>this.saveChange()}>Save Changes</Button>
         <div className="DivPostCategory">
               <ul className="listPost">
                 <li className="tittleListPC">Post</li>
                   {this.state.post.map((val, i) => {
-                    if(val.post.length > 76){
+                    if(val.post.length > 64){
                       return <li key={i}>
-                        {val.post.substring(0,76)}... 
+                        {val.post.substring(0,64)}... 
                         <ModalExample 
                         post={val.post} 
                         ind={i+1} 
@@ -197,52 +196,40 @@ class PostAndCategory extends Component {
                     percentage[key] = Math.round(((percentage[key]/TotalValores)*100)*10) / 10;
                     }
                     // THIS IS THE RESULT
-                    if(Number(val.category) !== 0){
-                      if (Postvalores.length === 0) {
-                        return <li className="LIstatistics" key={indexPost}>
-                          <div className="noUserSelected">No one has selected in this Post</div>
-                        </li>
-                      }else {
-                        return <li className="LIstatistics" key={indexPost}>
-                        <div className="StyleStatistics">
-                          {
-                            Object.keys(percentage).map((key, index) => {
-                              if(percentage[key] >= 45){
-                                return <div key={index} className="DivStatistics"
-                                style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
-                                  {this.state.category[key]+" "+percentage[key]+"%"}
-                               </div> 
-                              }else if(percentage[key] >= 30){
-                                return <div key={index} className="DivStatistics"
-                                style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)",cursor:"pointer"}}>
-                                  {this.state.category[key]}
-                                  <div className="tooltiptext">{this.state.category[key]+": "+percentage[key]+"%"}</div>
-                               </div> 
-                              }else if(percentage[key] >= 8){
-                                return <div key={index} className="DivStatistics"
-                                style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)",cursor:"pointer"}}>
-                                 {percentage[key]+"%"}
-                                  <div className="tooltiptext">{this.state.category[key]+": "+percentage[key]+"%"}</div>
-                               </div> 
-                              }else{
-                                return <div key={index} className="DivStatistics"
-                                style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)",cursor:"pointer"}}>
-                                  <div className="tooltiptext">{this.state.category[key]+": "+percentage[key]+"%"}</div>
-                               </div>
-                              }      
-                            })
-                          }  
-                        </div>
-                      </li> 
-                      }
-                    }else{
+                    if (Postvalores.length === 0) {
                       return <li className="LIstatistics" key={indexPost}>
-                          <div className="noUserSelected">You must select a Category</div>
-                        </li>
+                        <div className="noUserSelected">No one has selected in this Post</div>
+                      </li>
+                    }else {
+                      return <li className="LIstatistics" key={indexPost}>
+                      <div className="StyleStatistics">
+                        {
+                          Object.keys(percentage).map((key, index) => {
+                            if(percentage[key] === 100){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: "100%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                                <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div> 
+                            }else if(percentage[key] >= 50){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                                <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div> 
+                            }else{
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                                <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div>
+                            }      
+                          })
+                        }  
+                      </div>
+                    </li> 
                     }
                   })}
               </ul>
         </div>
+        <Button outline color="success" className="buttonSave" onClick={()=>this.saveChange()}>Save Categories</Button>
       </div>
     );
   }
