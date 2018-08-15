@@ -85,7 +85,7 @@
   display: inline-flex;
   height: auto;
   margin: 1% 0 0 1%;
-  width: 88%;
+  width: 85%;
 }
 .tittleListPC {
   font-size: 1.05rem;
@@ -103,7 +103,7 @@
 
 /* POST SECTION */
 .listPost {
-  width: 700px;
+  width: 740px;
   padding: 0;
   margin-bottom: 0;
 }
@@ -170,8 +170,21 @@
   border: 1px solid rgba(0,0,0,.125);
   margin: 0;
   padding: 8px 0;
-  cursor:pointer;
 }
-.DivStatistics:hover{
-  background-color:white;
+.DivStatistics:hover .tooltiptext{
+  visibility: visible;
+  background-color:black;
+}
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  padding: 0;
+  margin: 0;
+  font-size: 0.82rem;
+  /* Position the tooltip */
+  position: absolute;
 }
