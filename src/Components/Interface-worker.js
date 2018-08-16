@@ -124,22 +124,12 @@ class PostAndCategory extends Component {
   });
   }
 
-
-  saveChange(){
-    var refUserPost = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post");
-    let newPost = this.state.post;
-    for (let i = 0; i < newPost.length; i++) { 
-      newPost[i].category = this.state.value[i]
-    }
-    this.setState({post: newPost});
-    refUserPost.set(this.state.post)
-  }
-
-
   render() {
     return (
       <div>
+        {/* SECCION DE LA CATEGORIA Y LOS POST*/}
         <div className="DivPostCategory">
+              {/* SECCION DE LOS POSTS*/}
               <ul className="listPost">
                 <li className="tittleListPC">Post</li>
                   {this.state.post.map((val, i) => {
@@ -159,6 +149,7 @@ class PostAndCategory extends Component {
                     }
                   })}
               </ul>
+              {/* SECCION DE LAS CATEGORIAS*/}
               <ul className="listCategory">
                 <li className="tittleListPC">Category</li>
                   {this.state.post.map((val, i) => { 
@@ -170,12 +161,20 @@ class PostAndCategory extends Component {
                         handleChange={(event) =>{
                           let newValue = this.state.value.slice();
                           newValue[i] = event.target.value;
-                          this.setState({value: newValue});
+                          //save in firebase
+                          var refUserPost = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post");
+                          let newPost = this.state.post;
+                          for (let i = 0; i < newPost.length; i++) { 
+                            newPost[i].category = newValue[i]
+                          }
+                          this.setState({post: newPost});
+                          refUserPost.set(newPost)
                         }}
                         />
                       </li>
                     })}
               </ul>
+              {/* SECCION DE LAS ESTADISTICAS */}
               <ul className="listStatistics">
                 <li className="tittleListPC">Statistics of each Post</li>
                   {this.state.post.map((val, indexPost) => {
@@ -207,17 +206,17 @@ class PostAndCategory extends Component {
                           Object.keys(percentage).map((key, index) => {
                             if(percentage[key] === 100){
                               return <div key={index} className="DivStatistics"
-                              style={{width: "100%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                              style={{width: "100%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
                                 <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
                              </div> 
                             }else if(percentage[key] >= 50){
                               return <div key={index} className="DivStatistics"
-                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                              style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
                                 <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
                              </div> 
                             }else{
                               return <div key={index} className="DivStatistics"
-                              style={{width: percentage[key]+"%", backgroundColor:"hsl(135,"+percentage[key]+"%,50%)"}}>
+                              style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
                                 <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
                              </div>
                             }      
@@ -229,7 +228,6 @@ class PostAndCategory extends Component {
                   })}
               </ul>
         </div>
-        <Button outline color="success" className="buttonSave" onClick={()=>this.saveChange()}>Save Categories</Button>
       </div>
     );
   }
