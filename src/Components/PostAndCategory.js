@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CSS/PostAndCategory.css';
-import SelectForCategory  from '../Components/Tools/SelectForCategory.js'
+// import SelectForCategory  from '../Components/Tools/SelectForCategory.js'
+import Dropdown  from '../Components/Tools/Dropdown.js'
 import { dbUser, refAllUsers } from './Tools/DataBase.js'
 
 class PostAndCategory extends Component {
@@ -46,13 +47,11 @@ class PostAndCategory extends Component {
         <div className="DivPostCategory" style={{height:this.state.heightPC, maxHeight:this.state.heightPC}}>
           <div className="titleList">
             <li style={{width:"3%", maxWidth:"3%", padding:"0"}}>No.</li>
-            <li style={{width:"42%", maxWidth:"42%"}}>Comentario</li>
-            <li style={{width:"15%", maxWidth:"15%"}}>Categoría</li>
-            <li style={{width:"40%", maxWidth:"40%"}}>Estadística</li>
+            <li style={{width:"75%", maxWidth:"75%"}}>Comentario</li>
+            <li style={{width:"22%", maxWidth:"22%"}}>Categoría</li>
           </div>
           {this.state.post.map((val, ind) =>{
             //esto es para la estadistica.
-            var estadistica = ""
             let ArrayValores = this.state.PostOfUser.map(val => parseInt(val[ind].category, 10));
             var Postvalores = [];
             for (let i = 0; i < ArrayValores.length; i++) {
@@ -61,30 +60,30 @@ class PostAndCategory extends Component {
             let TotalValores = Postvalores.length
             var percentage = {};
             for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 };  
-            for (let key in percentage) { percentage[key] = Math.round(((percentage[key]/TotalValores)*100)*10) / 10 };
-            if (Postvalores.length === 0) { estadistica = "No one has selected in this Post"
-            }else {
-              estadistica = <div className="DivEstadistica">
-                {
-                  Object.keys(percentage).map((key, index) => {
-                      return (
-                        <div key={index} className="DivSonE" 
-                        style={{width:percentage[key]+"%", maxWidth:percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
-                          <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
-                        </div>
-                      )
-                    })
-                }  
-              </div>
-            }
             //Aqui termina lo de estadistica
 
             return (
               <div key={ind} className="NCClist">
                 <li key={ind} style={{width:"3%", maxWidth:"3%", textAlign:"center", padding:"0"}}>{ind+1}</li>
-                <li key={val.post} style={{width:"42%", maxWidth:"42%"}}>{val.post}</li>
-                <li style={{width:"15%", maxWidth:"15%", padding:"0"}}>
-                  {<SelectForCategory id={ind} listCategory={this.state.category} categoryValue={this.state.value[ind]}
+                <li key={val.post} style={{width:"75%", maxWidth:"75%"}}>{val.post}</li>
+                <li style={{width:"22%", maxWidth:"22%", padding:"0"}}>
+                  {/* <Dropdown numero={ind+1} objectEstadistica={percentage} numberUser={this.props.numberUser}/> */}
+                  <Dropdown numero={ind+1} numberUser={this.props.numberUser}/>
+                </li>
+                {/* <li style={{width:"30%", maxWidth:"30%", padding:"0", textAlign:"center"}}>{estadistica}</li> */}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default PostAndCategory;
+
+
+/* <SelectForCategory id={ind} listCategory={this.state.category} categoryValue={this.state.value[ind]}
                     handleChange={(event) =>{
                       const refUserPost = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post");
                       let newValue = this.state.value.slice();
@@ -97,16 +96,4 @@ class PostAndCategory extends Component {
                       this.setState({post: newPost});
                       refUserPost.set(newPost);
                     }}
-                  />}
-                </li>
-                <li style={{width:"40%", maxWidth:"40%", padding:"0", textAlign:"center"}}>{estadistica}</li>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    );
-  }
-}
-
-export default PostAndCategory;
+                  /> */
