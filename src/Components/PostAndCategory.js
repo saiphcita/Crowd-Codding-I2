@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './CSS/PostAndCategory.css';
-// import SelectForCategory  from '../Components/Tools/SelectForCategory.js'
-import Dropdown  from '../Components/Tools/Dropdown.js'
+import SelectForCategory  from '../Components/Tools/SelectForCategory.js'
 import { dbUser, refAllUsers } from './Tools/DataBase.js'
 
 class PostAndCategory extends Component {
@@ -52,14 +51,23 @@ class PostAndCategory extends Component {
           </div>
           {this.state.post.map((val, ind) =>{
             //esto es para la estadistica.
-            let ArrayValores = this.state.PostOfUser.map(val => parseInt(val[ind].category, 10));
+            var todasLasCategorias = {}
+            for (let i = 0; i < this.state.category.length; i++) {
+              todasLasCategorias[i] = 0
+            };
+            let ArrayValores = this.state.PostOfUser.map(val => Number(val[ind].category));
             var Postvalores = [];
             for (let i = 0; i < ArrayValores.length; i++) {
               if(ArrayValores[i] > 0){ Postvalores.push(ArrayValores[i]) };
             };
             let TotalValores = Postvalores.length
             var percentage = {};
-            for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 };  
+            for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 }; 
+            for (let i = 0; i < this.state.category.length; i++) {
+              if(percentage[i] !== undefined){
+                todasLasCategorias[i] = percentage[i]
+              }
+            };
             //Aqui termina lo de estadistica
 
             return (
@@ -67,10 +75,8 @@ class PostAndCategory extends Component {
                 <li key={ind} style={{width:"3%", maxWidth:"3%", textAlign:"center", padding:"0"}}>{ind+1}</li>
                 <li key={val.post} style={{width:"75%", maxWidth:"75%"}}>{val.post}</li>
                 <li style={{width:"22%", maxWidth:"22%", padding:"0"}}>
-                  {/* <Dropdown numero={ind+1} objectEstadistica={percentage} numberUser={this.props.numberUser}/> */}
-                  <Dropdown numero={ind+1} numberUser={this.props.numberUser}/>
+                  <SelectForCategory arrayCategorias={todasLasCategorias} numeroDePost={ind} actualCategory={val.category} numberUser={this.props.numberUser}/>
                 </li>
-                {/* <li style={{width:"30%", maxWidth:"30%", padding:"0", textAlign:"center"}}>{estadistica}</li> */}
               </div>
             )
           })}
