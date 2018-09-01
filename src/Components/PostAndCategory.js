@@ -8,7 +8,6 @@ class PostAndCategory extends Component {
     super(props);
     this.state = {
       post: [],
-      value: [],
       category: [],
       heightPC: "100%"
     };
@@ -19,7 +18,6 @@ class PostAndCategory extends Component {
     refUserPost.on("value", (snapshot) => {
       let posts = snapshot.val();
       this.setState({post : posts})
-      this.setState({value: posts.map(val => {return val.category})})
       // var arrayxx = posts
       // for (let i = 0; i < posts.length; i++) { 
       //   arrayxx[i].category = 0;
@@ -69,13 +67,12 @@ class PostAndCategory extends Component {
               }
             };
             //Aqui termina lo de estadistica
-
             return (
               <div key={ind} className="NCClist">
                 <li key={ind} style={{width:"3%", maxWidth:"3%", textAlign:"center", padding:"0"}}>{ind+1}</li>
                 <li key={val.post} style={{width:"75%", maxWidth:"75%"}}>{val.post}</li>
                 <li style={{width:"22%", maxWidth:"22%", padding:"0"}}>
-                  <SelectForCategory arrayCategorias={todasLasCategorias} numeroDePost={ind} actualCategory={val.category} numberUser={this.props.numberUser}/>
+                  <SelectForCategory arrayCategorias={todasLasCategorias} numeroDePost={ind} actualCategory={this.state.post[ind].category} numberUser={this.props.numberUser}/>
                 </li>
               </div>
             )
@@ -87,19 +84,3 @@ class PostAndCategory extends Component {
 }
 
 export default PostAndCategory;
-
-
-/* <SelectForCategory id={ind} listCategory={this.state.category} categoryValue={this.state.value[ind]}
-                    handleChange={(event) =>{
-                      const refUserPost = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post");
-                      let newValue = this.state.value.slice();
-                      newValue[ind] = event.target.value;
-                      //save in firebase
-                      let newPost = this.state.post;
-                      for (let i = 0; i < newPost.length; i++) {
-                        newPost[i].category = newValue[i]
-                      };
-                      this.setState({post: newPost});
-                      refUserPost.set(newPost);
-                    }}
-                  /> */

@@ -11,6 +11,7 @@ export default class SelectForCategory extends React.Component {
     this.state = {
       dropdownOpen: false,
       category: [],
+      actualCategory:""
     };
   }
 
@@ -25,6 +26,11 @@ export default class SelectForCategory extends React.Component {
     refUserCategory.on("value", (snapshot) => {
       let category = snapshot.val();
       this.setState({category : category})
+      if(this.props.actualCategory === 0){
+        this.setState({actualCategory:"Sin Seleccionar"})
+      }else{
+        this.setState({actualCategory:category[this.props.actualCategory]})
+      }
     });
   };
 
@@ -62,7 +68,7 @@ export default class SelectForCategory extends React.Component {
         </DropdownToggle>
         <DropdownMenu style={dropDownS}>
           <DropdownItem style={{color:"black"}} header>{"Comentario "+(this.props.numeroDePost+1)}</DropdownItem>
-          <DropdownItem disabled>{"Categoría: "+this.state.category[this.props.actualCategory]}</DropdownItem>
+          <DropdownItem disabled>{"Categoría: "+this.state.actualCategory}</DropdownItem>
           <DropdownItem divider />
           {
             this.state.category.map((val, ind) => {
@@ -71,6 +77,7 @@ export default class SelectForCategory extends React.Component {
                   <DropdownItem key={ind} 
                     onClick={()=>{
                       const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post/"+this.props.numeroDePost+"/category/")
+                      this.setState({actualCategory:this.state.category[ind]})
                       refUserCategorySelected.set(ind)
                     }}>
                       <div style={{float:"left", marginRight:"16px"}}>{val}</div>
@@ -81,6 +88,7 @@ export default class SelectForCategory extends React.Component {
                   <DropdownItem key={ind} 
                     onClick={()=>{
                       const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post/"+this.props.numeroDePost+"/category/")
+                      this.setState({actualCategory:this.state.category[ind]})
                       refUserCategorySelected.set(ind)
                     }}>
                       <div style={{float:"left", marginRight:"16px"}}>{val}</div>
