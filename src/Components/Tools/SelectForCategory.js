@@ -1,7 +1,8 @@
 import React from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Icon from 'react-icons-kit';
-import {arrowUp} from 'react-icons-kit/icomoon/arrowUp'
+import {arrowUp} from 'react-icons-kit/icomoon/arrowUp';
+import { refAllUsers } from './DataBase.js'
 
 export default class SelectForCategory extends React.Component {
   constructor(props) {
@@ -24,16 +25,30 @@ export default class SelectForCategory extends React.Component {
   componentDidMount() {
     this.setState({actualCategory: this.props.actual})
 
-    var anObject = {}
-    for(let i = 0; i < this.props.categorias.length; i++){
-      anObject[this.props.categorias[i]] = 0
-      if(this.props.popularity[this.props.categorias[i]] !== undefined){
-        anObject[this.props.categorias[i]] = this.props.popularity[this.props.categorias[i]]
+    refAllUsers.on("value", (snapshot) => {
+      let AllUsers = snapshot.val();
+      let PostOfUser = AllUsers.map( val => val.PostAndCategory.Post)
+      //estadistica
+      let arrayValores = PostOfUser.map(val => val[this.props.numberP].category);
+      var Postvalores = [];
+      for (let i = 0; i < arrayValores.length; i++) {
+        if(arrayValores[i] !== "Select Category"){ Postvalores.push(arrayValores[i]) };
+      };
+      let TotalValores = Postvalores.length
+      var percentage = {};
+      for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 };
+      //Ordenando la lista
+      var anObject = {}
+      for(let i = 0; i < this.props.categorias.length; i++){
+        anObject[this.props.categorias[i]] = 0
+        if(percentage[this.props.categorias[i]] !== undefined){
+          anObject[this.props.categorias[i]] = percentage[this.props.categorias[i]]
+        }
       }
-    }
-    this.setState({categoriasPopularty: anObject})
-    var arrayCategories = Object.keys(anObject).sort((b,a)=>{return anObject[a]-anObject[b]})
-    this.setState({arrayCategories: arrayCategories})
+      this.setState({categoriasPopularty: anObject})
+      var arrayCategories = Object.keys(anObject).sort((b,a)=>{return anObject[a]-anObject[b]})
+      this.setState({arrayCategories: arrayCategories})
+    });
   };  
 
   render() {
