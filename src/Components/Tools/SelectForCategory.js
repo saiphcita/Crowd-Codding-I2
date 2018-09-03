@@ -2,7 +2,6 @@ import React from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Icon from 'react-icons-kit';
 import {arrowUp} from 'react-icons-kit/icomoon/arrowUp'
-import { dbUser } from './DataBase.js'
 
 export default class SelectForCategory extends React.Component {
   constructor(props) {
@@ -10,8 +9,9 @@ export default class SelectForCategory extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false,
-      category: [],
-      actualCategory:""
+      actualCategory: "",
+      categoriasPopularty: {},
+      arrayCategories: []
     };
   }
 
@@ -22,17 +22,19 @@ export default class SelectForCategory extends React.Component {
   }
 
   componentDidMount() {
-    const refUserCategory = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Category");
-    refUserCategory.on("value", (snapshot) => {
-      let category = snapshot.val();
-      this.setState({category : category})
-      if(this.props.actualCategory === 0){
-        this.setState({actualCategory:"Sin Seleccionar"})
-      }else{
-        this.setState({actualCategory:category[this.props.actualCategory]})
+    this.setState({actualCategory: this.props.actual})
+
+    var anObject = {}
+    for(let i = 0; i < this.props.categorias.length; i++){
+      anObject[this.props.categorias[i]] = 0
+      if(this.props.popularity[this.props.categorias[i]] !== undefined){
+        anObject[this.props.categorias[i]] = this.props.popularity[this.props.categorias[i]]
       }
-    });
-  };
+    }
+    this.setState({categoriasPopularty: anObject})
+    var arrayCategories = Object.keys(anObject).sort((b,a)=>{return anObject[a]-anObject[b]})
+    this.setState({arrayCategories: arrayCategories})
+  };  
 
   render() {
     var buttonStyle = {
@@ -61,45 +63,33 @@ export default class SelectForCategory extends React.Component {
         width:"40px", 
         textAlign:"center"
     };
+
     return (
-      <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{height:"100%", width:"100%"}}>
-        <DropdownToggle caret style={buttonStyle}>
-          {this.state.category[this.props.actualCategory]}
-        </DropdownToggle>
-        <DropdownMenu style={dropDownS}>
-          <DropdownItem style={{color:"black"}} header>{"Comentario "+(this.props.numeroDePost+1)}</DropdownItem>
-          <DropdownItem disabled>{"Categoría: "+this.state.actualCategory}</DropdownItem>
-          <DropdownItem divider />
-          {
-            this.state.category.map((val, ind) => {
-              if(ind === 0){
+      <div style={{height:"100%", width:"100%"}}>
+         <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{height:"100%", width:"100%"}}>
+          <DropdownToggle caret style={buttonStyle}>
+            {this.state.actualCategory}
+          </DropdownToggle>
+          <DropdownMenu style={dropDownS}>
+            <DropdownItem style={{color:"black"}} header>{"Comentario "+(this.props.numberP+1)}</DropdownItem>
+            <DropdownItem disabled>{"Categoría: "+this.state.actualCategory}</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem key={0} onClick={()=>{this.setState({actualCategory:"Select Category"}); this.props.saveCategory.set("Select Category")}}>
+              <div style={{float:"left", marginRight:"16px"}}>Select Category</div> 
+            </DropdownItem>
+            {
+              this.state.arrayCategories.map((val, ind) => {
                 return(
-                  <DropdownItem key={ind} 
-                    onClick={()=>{
-                      const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post/"+this.props.numeroDePost+"/category/")
-                      this.setState({actualCategory:this.state.category[ind]})
-                      refUserCategorySelected.set(ind)
-                    }}>
-                      <div style={{float:"left", marginRight:"16px"}}>{val}</div>
+                  <DropdownItem key={ind} onClick={()=>{this.setState({actualCategory:val}); this.props.saveCategory.set(val)}}>
+                      <div style={{float:"left", marginRight:"16px"}}>{val}</div> 
+                      <div style={numeroEstadistico}>{this.state.categoriasPopularty[val]} <Icon size={12} icon={arrowUp}/></div>
                   </DropdownItem>
                 )
-              }else{
-                return(
-                  <DropdownItem key={ind} 
-                    onClick={()=>{
-                      const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post/"+this.props.numeroDePost+"/category/")
-                      this.setState({actualCategory:this.state.category[ind]})
-                      refUserCategorySelected.set(ind)
-                    }}>
-                      <div style={{float:"left", marginRight:"16px"}}>{val}</div>
-                      <div style={numeroEstadistico}>{this.props.arrayCategorias[ind]} <Icon size={12} icon={arrowUp}/></div>
-                  </DropdownItem>
-                )
-              }
-            })
-          }
-        </DropdownMenu>
-      </ButtonDropdown>
+              })
+            }
+          </DropdownMenu>
+        </ButtonDropdown>
+      </div>
     );
   }
 }

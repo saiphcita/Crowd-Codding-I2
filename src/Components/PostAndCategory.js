@@ -14,7 +14,7 @@ class PostAndCategory extends Component {
   }
 
   componentDidMount() {
-    const refUserPost = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Post");    
+    const refUserPost = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post");    
     refUserPost.on("value", (snapshot) => {
       let posts = snapshot.val();
       this.setState({post : posts})
@@ -25,7 +25,7 @@ class PostAndCategory extends Component {
       // refUserPost.set(arrayxx);
     });
 
-    const refUserCategory = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Category");
+    const refUserCategory = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Category");
     refUserCategory.on("value", (snapshot) => {
       let category = snapshot.val();
       this.setState({category : category})
@@ -33,7 +33,7 @@ class PostAndCategory extends Component {
 
     refAllUsers.on("value", (snapshot) => {
       let AllUsers = snapshot.val();
-      let PostOfUser = AllUsers.map( val => val.User.PostAndCategory.Post)
+      let PostOfUser = AllUsers.map( val => val.PostAndCategory.Post)
       this.setState({PostOfUser: PostOfUser})
     });
   };
@@ -48,31 +48,31 @@ class PostAndCategory extends Component {
             <li style={{width:"22%", maxWidth:"22%"}}>Categoría</li>
           </div>
           {this.state.post.map((val, ind) =>{
-            //esto es para la estadistica.
-            var todasLasCategorias = {}
-            for (let i = 0; i < this.state.category.length; i++) {
-              todasLasCategorias[i] = 0
-            };
-            let ArrayValores = this.state.PostOfUser.map(val => Number(val[ind].category));
+            //esto es Select Category y Estadistica
+              //listado de categorias
+            var todasLasCategorias = this.state.category
+            todasLasCategorias = Object.keys(todasLasCategorias).map((val)=>{return val})
+              //estadistica
+            let arrayValores = this.state.PostOfUser.map(val => val[ind].category);
             var Postvalores = [];
-            for (let i = 0; i < ArrayValores.length; i++) {
-              if(ArrayValores[i] > 0){ Postvalores.push(ArrayValores[i]) };
+            for (let i = 0; i < arrayValores.length; i++) {
+              if(arrayValores[i] !== "Select Category"){ Postvalores.push(arrayValores[i]) };
             };
             let TotalValores = Postvalores.length
             var percentage = {};
-            for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 }; 
-            for (let i = 0; i < this.state.category.length; i++) {
-              if(percentage[i] !== undefined){
-                todasLasCategorias[i] = percentage[i]
-              }
-            };
-            //Aqui termina lo de estadistica
+            for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 };
+              //para la funcion de guardado
+            const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/category/")
+            //Aqui termina lo de Select Category y Estadistica
             return (
               <div key={ind} className="NCClist">
                 <li key={ind} style={{width:"3%", maxWidth:"3%", textAlign:"center", padding:"0"}}>{ind+1}</li>
                 <li key={val.post} style={{width:"75%", maxWidth:"75%"}}>{val.post}</li>
-                <li style={{width:"22%", maxWidth:"22%", padding:"0"}}>
-                  <SelectForCategory arrayCategorias={todasLasCategorias} numeroDePost={ind} actualCategory={this.state.post[ind].category} numberUser={this.props.numberUser}/>
+                <li style={{width:"22%", maxWidth:"22%", padding:"0", margin:"0"}}>
+                  <div style={{height:"100%", width:"100%"}}>
+                  {/* <SelectForCategory arrayCategorias={todasLasCategorias} numeroDePost={ind} actualCategory={this.state.post[ind].category} numberUser={this.props.numberUser}/> */}
+                    <SelectForCategory popularity={percentage} saveCategory={refUserCategorySelected} categorias={todasLasCategorias} numberP={ind} actual={this.state.post[ind].category}/>
+                  </div>
                 </li>
               </div>
             )
@@ -84,3 +84,24 @@ class PostAndCategory extends Component {
 }
 
 export default PostAndCategory;
+
+
+            // //esto es Select Category y Estadistica
+            // var todasLasCategorias = {}
+            // for (let i = 0; i < this.state.category.length; i++) {
+            //   todasLasCategorias[i] = 0
+            // };
+            // let ArrayValores = this.state.PostOfUser.map(val => Number(val[ind].category));
+            // var Postvalores = [];
+            // for (let i = 0; i < ArrayValores.length; i++) {
+            //   if(ArrayValores[i] > 0){ Postvalores.push(ArrayValores[i]) };
+            // };
+            // let TotalValores = Postvalores.length
+            // var percentage = {};
+            // for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 }; 
+            // for (let i = 0; i < this.state.category.length; i++) {
+            //   if(percentage[i] !== undefined){
+            //     todasLasCategorias[i] = percentage[i]
+            //   }
+            // };
+            // //Aqui termina lo de Select Category y Estadistica
