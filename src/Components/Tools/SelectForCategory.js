@@ -53,6 +53,7 @@ export default class SelectForCategory extends React.Component {
 
   render() {
     var buttonStyle = {
+        position: "inherit",
         backgroundColor: "#fff",
         color: "black",
         height: "100%",
@@ -81,7 +82,7 @@ export default class SelectForCategory extends React.Component {
 
     return (
       <div style={{height:"100%", width:"100%"}}>
-         <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{height:"100%", width:"100%"}}>
+         <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{position:"inherit", height:"100%", width:"100%"}}>
           <DropdownToggle caret style={buttonStyle}>
             {this.state.actualCategory}
           </DropdownToggle>

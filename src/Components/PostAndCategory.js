@@ -58,10 +58,8 @@ class PostAndCategory extends Component {
                 <li key={ind} style={{width:"3%", maxWidth:"3%", textAlign:"center", padding:"0"}}>{ind+1}</li>
                 <li key={val.post} style={{width:"75%", maxWidth:"75%"}}>{val.post}</li>
                 <li style={{width:"22%", maxWidth:"22%", padding:"0", margin:"0"}}>
-                  <div style={{height:"100%", width:"100%"}}>
                   {/* <SelectForCategory arrayCategorias={todasLasCategorias} numeroDePost={ind} actualCategory={this.state.post[ind].category} numberUser={this.props.numberUser}/> */}
-                    <SelectForCategory saveCategory={refUserCategorySelected} categorias={todasLasCategorias} numberP={ind} actual={this.state.post[ind].category}/>
-                  </div>
+                  <SelectForCategory saveCategory={refUserCategorySelected} categorias={todasLasCategorias} numberP={ind} actual={this.state.post[ind].category}/>
                 </li>
               </div>
             )
