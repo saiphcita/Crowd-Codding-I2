@@ -87,8 +87,8 @@ export default class SelectForCategory extends React.Component {
             {this.state.actualCategory}
           </DropdownToggle>
           <DropdownMenu style={dropDownS}>
-            <DropdownItem style={{color:"black"}} header>{"Comentario "+(this.props.numberP+1)}</DropdownItem>
-            <DropdownItem disabled>{"Categoría: "+this.state.actualCategory}</DropdownItem>
+            <DropdownItem style={{color:"black"}} header>{"Post "+(this.props.numberP+1)}</DropdownItem>
+            <DropdownItem disabled>{"Category: "+this.state.actualCategory}</DropdownItem>
             <DropdownItem divider />
             <DropdownItem key={0} onClick={()=>{this.setState({actualCategory:"Select Category"}); this.props.saveCategory.set("Select Category")}}>
               <div style={{float:"left", marginRight:"16px"}}>Select Category</div> 

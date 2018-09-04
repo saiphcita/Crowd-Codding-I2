@@ -44,8 +44,8 @@ class PostAndCategory extends Component {
         <div className="DivPostCategory" style={{height:this.state.heightPC, maxHeight:this.state.heightPC}}>
           <div className="titleList">
             <li style={{width:"3%", maxWidth:"3%", padding:"0"}}>No.</li>
-            <li style={{width:"75%", maxWidth:"75%"}}>Comentario</li>
-            <li style={{width:"22%", maxWidth:"22%"}}>Categoría</li>
+            <li style={{width:"75%", maxWidth:"75%"}}>Post</li>
+            <li style={{width:"22%", maxWidth:"22%"}}>Category</li>
           </div>
           {this.state.post.map((val, ind) =>{
             //esto es Select Category y Estadistica
@@ -71,24 +71,3 @@ class PostAndCategory extends Component {
 }
 
 export default PostAndCategory;
-
-
-            // //esto es Select Category y Estadistica
-            // var todasLasCategorias = {}
-            // for (let i = 0; i < this.state.category.length; i++) {
-            //   todasLasCategorias[i] = 0
-            // };
-            // let ArrayValores = this.state.PostOfUser.map(val => Number(val[ind].category));
-            // var Postvalores = [];
-            // for (let i = 0; i < ArrayValores.length; i++) {
-            //   if(ArrayValores[i] > 0){ Postvalores.push(ArrayValores[i]) };
-            // };
-            // let TotalValores = Postvalores.length
-            // var percentage = {};
-            // for (let i = 0; i < TotalValores; i++) { percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1 }; 
-            // for (let i = 0; i < this.state.category.length; i++) {
-            //   if(percentage[i] !== undefined){
-            //     todasLasCategorias[i] = percentage[i]
-            //   }
-            // };
-            // //Aqui termina lo de Select Category y Estadistica
