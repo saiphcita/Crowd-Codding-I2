@@ -82,7 +82,7 @@ export default class SelectForCategory extends React.Component {
 
     return (
       <div style={{height:"100%", width:"100%"}}>
-         <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{position:"inherit", height:"100%", width:"100%"}}>
+         <ButtonDropdown onClick={this.props.Change} direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{position:"inherit", height:"100%", width:"100%"}}>
           <DropdownToggle caret style={buttonStyle}>
             {this.state.actualCategory}
           </DropdownToggle>
@@ -90,13 +90,13 @@ export default class SelectForCategory extends React.Component {
             <DropdownItem style={{color:"black"}} header>{"Post "+(this.props.numberP+1)}</DropdownItem>
             <DropdownItem disabled>{"Category: "+this.state.actualCategory}</DropdownItem>
             <DropdownItem divider />
-            <DropdownItem key={0} onClick={()=>{this.setState({actualCategory:"Select Category"}); this.props.saveCategory.set("Select Category")}}>
+            <DropdownItem key={0} onClick={()=>{this.setState({actualCategory:"Select Category"}); this.props.saveCategory.set("Select Category"); this.props.elState.set("working");}}>
               <div style={{float:"left", marginRight:"16px"}}>Select Category</div> 
             </DropdownItem>
             {
               this.state.arrayCategories.map((val, ind) => {
                 return(
-                  <DropdownItem key={ind} onClick={()=>{this.setState({actualCategory:val}); this.props.saveCategory.set(val)}}>
+                  <DropdownItem key={ind} onClick={()=>{this.setState({actualCategory:val}); this.props.saveCategory.set(val); this.props.elState.set("working");}}>
                       <div style={{float:"left", marginRight:"16px"}}>{val}</div> 
                       <div style={numeroEstadistico}>{this.state.categoriasPopularty[val]} <Icon size={12} icon={arrowUp}/></div>
                   </DropdownItem>
