@@ -6,7 +6,6 @@ import AsideBar  from '../Components/AsideBar.js'
 import PostAndCategory  from '../Components/PostAndCategory.js'
 import PagePay  from '../Components/PagePay.js'
 
-
 class WorkerPage extends Component {
   constructor(props) {
     super(props);
