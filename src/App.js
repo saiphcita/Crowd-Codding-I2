@@ -1,8 +1,8 @@
 import React  from 'react';
-import Routes from "./Routes"
+import InterfaceWorker2 from "./Page/InterfaceWorker2.js"
 
 const App = () => (
-    <Routes/>
+    <InterfaceWorker2/>
 );
 
 export default App;
